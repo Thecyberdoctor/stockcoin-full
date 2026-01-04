@@ -12,12 +12,16 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.24.5'
-      - run: |
+      - name: Build APK
+        run: |
           flutter create mobile --empty
           cd mobile
           flutter pub get
-          flutter build apk --debug
+          flutter build apk --release --no-shrink
+        env:
+          GRADLE_OPTS: -Xmx4g -XX:MaxPermSize=4g -XX:+HeapDumpOnOutOfMemoryError
+          JAVA_OPTS: -Xmx4g
       - uses: actions/upload-artifact@v4
         with:
           name: stockcoin-apk
-          path: mobile/build/app/outputs/flutter-apk/app-debug.apk
+          path: mobile/build/app/outputs/flutter-apk/app-release.apk
