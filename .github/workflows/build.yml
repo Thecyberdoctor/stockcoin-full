@@ -13,6 +13,7 @@ jobs:
         with:
           flutter-version: '3.24.5'
       - run: |
+          flutter create mobile --empty
           cd mobile
           flutter pub get
           flutter build apk --debug
